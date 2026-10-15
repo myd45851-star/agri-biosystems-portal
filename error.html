@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block content %}<section class="error-page"><span class="error-code">{{ code }}</span><h1>تعذر إكمال الطلب</h1><p>{{ message }}</p><a class="btn primary" href="{{ url_for('index') }}">العودة للرئيسية</a></section>{% endblock %}

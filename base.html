@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}بوابة مواد هندسة الزراعة والحيوية{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="{{ url_for('index') }}"><span class="brand-icon">AG</span><span>بوابة <b>الزراعة والحيوية</b><small>المكتبة الأكاديمية الرقمية</small></span></a>
+<nav>{% if current_user.is_authenticated %}{% if current_user.is_admin %}<a href="{{ url_for('admin_dashboard') }}">لوحة الإدارة</a>{% elif current_user.approved %}<a href="{{ url_for('library') }}">المكتبة</a>{% endif %}<form method="post" action="{{ url_for('logout') }}" class="inline"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="nav-button">خروج</button></form>{% else %}<a href="{{ url_for('login') }}">تسجيل الدخول</a><a class="nav-cta" href="{{ url_for('register') }}">طلب عضوية</a>{% endif %}</nav></header>
+<main class="container">
+{% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="alerts">{% for category, message in messages %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+{% block content %}{% endblock %}
+</main>
+<footer>بوابة تعليمية مستقلة لمشاركة المواد الدراسية <span>•</span> وصول مخصص للأعضاء المعتمدين</footer>
+</body></html>
